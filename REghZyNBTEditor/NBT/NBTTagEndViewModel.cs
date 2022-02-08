@@ -4,7 +4,7 @@ namespace REghZyNBTEditor.NBT {
     public class NBTTagEndViewModel : NBTBaseViewModel {
         public override NBTType Type => NBTType.End;
 
-        public override NBTBaseViewModel Copy() {
+        protected override NBTBaseViewModel CopyInternal() {
             return new NBTTagEndViewModel();
         }
 

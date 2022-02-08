@@ -2,7 +2,7 @@
 
 namespace REghZyNBTEditor.NBT {
     public class NBTTagFloatViewModel : NBTBaseViewModel {
-        public override NBTType Type => NBTType.Integer;
+        public override NBTType Type => NBTType.Float;
 
         private float value;
         public float Value {
@@ -26,7 +26,7 @@ namespace REghZyNBTEditor.NBT {
             this.value = value;
         }
 
-        public override NBTBaseViewModel Copy() {
+        protected override NBTBaseViewModel CopyInternal() {
             return new NBTTagFloatViewModel(this.name, this.value);
         }
 

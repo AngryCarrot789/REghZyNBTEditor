@@ -27,7 +27,7 @@ namespace REghZyNBTEditor.NBT {
         }
 
 
-        public override NBTBaseViewModel Copy() {
+        protected override NBTBaseViewModel CopyInternal() {
             return new NBTTagShortViewModel(this.name, this.value);
         }
 

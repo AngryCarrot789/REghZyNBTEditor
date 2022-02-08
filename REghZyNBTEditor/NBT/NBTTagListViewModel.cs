@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using REghZyIOWrapperV2.Streams;
-using REghZyNBTEditor.Utilities;
 
 namespace REghZyNBTEditor.NBT {
-    public class NBTTagListViewModel : NBTBaseViewModel {
-        public override NBTType Type => NBTType.Integer;
+    public class NBTTagListViewModel : NBTCollectiveViewModel {
+        public override NBTType Type => NBTType.List;
 
         private NBTType tagType;
         public NBTType TagType {
@@ -35,10 +33,10 @@ namespace REghZyNBTEditor.NBT {
             this.data = data;
         }
 
-        public override NBTBaseViewModel Copy() {
+        protected override NBTBaseViewModel CopyInternal() {
             List<NBTBaseViewModel> list = new List<NBTBaseViewModel>(this.data);
             foreach (NBTBaseViewModel nbt in this.data) {
-                list.Add(nbt.Copy());
+                list.Add(nbt.CopyWithParent());
             }
 
             return new NBTTagListViewModel(this.name, list);
@@ -49,7 +47,7 @@ namespace REghZyNBTEditor.NBT {
             uint size = input.ReadInt();
             this.data.Clear();
             for (uint i = 0; i < size; i++) {
-                NBTBaseViewModel nbt = this.tagType.CreateNBT(null);
+                NBTBaseViewModel nbt = this.tagType.CreateNBT(null, this);
                 nbt.Read(input);
                 this.data.Add(nbt);
             }

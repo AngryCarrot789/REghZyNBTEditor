@@ -4,8 +4,8 @@ using REghZyIOWrapperV2.Streams;
 using REghZyNBTEditor.Utilities;
 
 namespace REghZyNBTEditor.NBT {
-    public class NBTTagCompoundViewModel : NBTBaseViewModel {
-        public override NBTType Type => NBTType.Integer;
+    public class NBTTagCompoundViewModel : NBTCollectiveViewModel {
+        public override NBTType Type => NBTType.Compound;
 
         private NBTType tagType;
         public NBTType TagType {
@@ -13,26 +13,26 @@ namespace REghZyNBTEditor.NBT {
             set => RaisePropertyChanged(ref this.tagType, value);
         }
 
-        private Dictionary<string, NBTBaseViewModel> data;
-        public Dictionary<string, NBTBaseViewModel> Data {
-            get => this.data;
-            set => RaisePropertyChanged(ref this.data, value);
+        private Dictionary<string, NBTBaseViewModel> map;
+        public Dictionary<string, NBTBaseViewModel> Map {
+            get => this.map;
+            set => RaisePropertyChanged(ref this.map, value);
         }
 
         public NBTTagCompoundViewModel() {
-            this.data = new Dictionary<string, NBTBaseViewModel>();
+            this.map = new Dictionary<string, NBTBaseViewModel>();
         }
 
         public NBTTagCompoundViewModel(string name) : base(name) {
-            this.data = new Dictionary<string, NBTBaseViewModel>();
+            this.map = new Dictionary<string, NBTBaseViewModel>();
         }
 
-        public NBTTagCompoundViewModel(Dictionary<string, NBTBaseViewModel> data) {
-            this.data = data;
+        public NBTTagCompoundViewModel(Dictionary<string, NBTBaseViewModel> map) {
+            this.map = map;
         }
 
-        public NBTTagCompoundViewModel(string name, Dictionary<string, NBTBaseViewModel> data) : base(name) {
-            this.data = data;
+        public NBTTagCompoundViewModel(string name, Dictionary<string, NBTBaseViewModel> map) : base(name) {
+            this.map = map;
         }
 
         public void SetTag(string tagName, NBTBaseViewModel nbt) {
@@ -40,22 +40,22 @@ namespace REghZyNBTEditor.NBT {
                 nbt.Name = tagName;
             }
 
-            this.data[tagName] = nbt;
+            this.map[tagName] = nbt;
         }
 
-        public override NBTBaseViewModel Copy() {
+        protected override NBTBaseViewModel CopyInternal() {
             NBTTagCompoundViewModel tag = new NBTTagCompoundViewModel(this.name);
-            foreach (NBTBaseViewModel nbt in this.data.Values) {
-                tag.SetTag(nbt.Name, nbt.Copy());
+            foreach (NBTBaseViewModel nbt in this.map.Values) {
+                tag.SetTag(nbt.Name, nbt.CopyWithParent());
             }
 
             return tag;
         }
 
         public override void Read(IDataInput input) {
-            this.data.Clear();
+            this.map.Clear();
             while (true) {
-                NBTBaseViewModel nbt = ReadNBT(input);
+                NBTBaseViewModel nbt = ReadNBT(input, this);
                 if (nbt.Type.IsValid() && nbt.Type != NBTType.End) {
                     SetTag(nbt.Name, nbt);
                 }
@@ -66,7 +66,7 @@ namespace REghZyNBTEditor.NBT {
         }
 
         public override void Write(IDataOutput output) {
-            foreach (NBTBaseViewModel nbt in this.data.Values) {
+            foreach (NBTBaseViewModel nbt in this.map.Values) {
                 WriteNBT(nbt, output);
             }
 

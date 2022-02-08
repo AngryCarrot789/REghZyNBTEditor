@@ -6,7 +6,7 @@ namespace REghZyNBTEditor.NBT {
         End =       0,
         Byte =      1,
         Short =     2,
-        Integer =   3,
+        Int =       3,
         Long =      4,
         Float =     5,
         Double =    6,
@@ -23,20 +23,20 @@ namespace REghZyNBTEditor.NBT {
             return value >= 0 && value <= 11;
         }
 
-        public static NBTBaseViewModel CreateNBT(this NBTType type, string name) {
+        public static NBTBaseViewModel CreateNBT(this NBTType type, string name, NBTCollectiveViewModel parent = null) {
             switch (type) {
-                case NBTType.End:       return new NBTTagEndViewModel();
-                case NBTType.Byte:      return new NBTTagByteViewModel(name);
-                case NBTType.Short:     return new NBTTagShortViewModel(name);
-                case NBTType.Integer:   return new NBTTagIntViewModel(name);
-                case NBTType.Long:      return new NBTTagLongViewModel(name);
-                case NBTType.Float:     return new NBTTagFloatViewModel(name);
-                case NBTType.Double:    return new NBTTagDoubleViewModel(name);
-                case NBTType.ByteArray: return new NBTTagByteArrayViewModel(name);
-                case NBTType.String:    return new NBTTagStringViewModel(name);
-                case NBTType.List:      return new NBTTagListViewModel(name);
-                case NBTType.Compound:  return null; // return new NBTTagEndViewModel();
-                case NBTType.IntArray:  return new NBTTagIntArrayViewModel(name);
+                case NBTType.End:       return new NBTTagEndViewModel() { Parent = parent };
+                case NBTType.Byte:      return new NBTTagByteViewModel(name) { Parent = parent };
+                case NBTType.Short:     return new NBTTagShortViewModel(name) { Parent = parent };
+                case NBTType.Int:       return new NBTTagIntViewModel(name) { Parent = parent };
+                case NBTType.Long:      return new NBTTagLongViewModel(name) { Parent = parent };
+                case NBTType.Float:     return new NBTTagFloatViewModel(name) { Parent = parent };
+                case NBTType.Double:    return new NBTTagDoubleViewModel(name) { Parent = parent };
+                case NBTType.ByteArray: return new NBTTagByteArrayViewModel(name) { Parent = parent };
+                case NBTType.String:    return new NBTTagStringViewModel(name) { Parent = parent };
+                case NBTType.List:      return new NBTTagListViewModel(name) { Parent = parent };
+                case NBTType.Compound:  return new NBTTagCompoundViewModel(name) { Parent = parent };
+                case NBTType.IntArray:  return new NBTTagIntArrayViewModel(name) { Parent = parent };
                 default: throw new Exception("Unknown NBT type: " + type);
             }
         }
@@ -46,7 +46,7 @@ namespace REghZyNBTEditor.NBT {
                 case NBTType.End:       return "TAG_End";
                 case NBTType.Byte:      return "TAG_Byte";
                 case NBTType.Short:     return "TAG_Short";
-                case NBTType.Integer:   return "TAG_Int";
+                case NBTType.Int:       return "TAG_Int";
                 case NBTType.Long:      return "TAG_Long";
                 case NBTType.Float:     return "TAG_Float";
                 case NBTType.Double:    return "TAG_Double";

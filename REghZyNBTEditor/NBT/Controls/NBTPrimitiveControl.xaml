@@ -6,16 +6,33 @@
              xmlns:local="clr-namespace:REghZyNBTEditor.NBT.Controls"
              xmlns:converters="clr-namespace:REghZyNBTEditor.Converters" 
              xmlns:viewmodels="clr-namespace:REghZyNBTEditor.ViewModels" 
-             d:DataContext="{d:DesignInstance Type=viewmodels:NBTTreeItemViewModel}"
+             xmlns:nbtvm="clr-namespace:REghZyNBTEditor.NBT" 
+             d:DataContext="{d:DesignInstance Type=nbtvm:NBTBaseViewModel}"
              mc:Ignorable="d" 
-             d:DesignHeight="32" d:DesignWidth="800">
+             d:DesignHeight="20" d:DesignWidth="800"
+             HorizontalContentAlignment="Stretch"
+             HorizontalAlignment="Stretch">
     <UserControl.Resources>
-        <converters:NBTTypeToIconConverter x:Key="IconConverter"/>
+        <converters:PrimitiveNBTValuePreviewConverter x:Key="PrimitiveNBTValuePreviewConverter"/>
+        <converters:NBTTypeToResourceLocationConverter x:Key="IconConverter"/>
+        <Style x:Key="ValuePreviewStyle" TargetType="{x:Type TextBlock}">
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="TextTrimming" Value="None"/>
+            <Setter Property="TextAlignment" Value="Left"/>
+            <Setter Property="FontStyle" Value="Normal"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Type, UpdateSourceTrigger=PropertyChanged}" Value="String">
+                    <Setter Property="FontStyle" Value="Italic"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
-    <Grid>
-        <Label Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="25" HorizontalAlignment="Left" 
-               Content="{Binding Type, Converter={StaticResource IconConverter}}" FontSize="20" FontWeight="Bold"/>
-        <Label Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" 
-               Content="{Binding Name}" FontSize="16" Margin="30,0,0,0"/>
-    </Grid>
+    <StackPanel Orientation="Horizontal">
+        <!-- /REghZyNBTEditor;component/Assets/tagS16.png -->
+        <Border Width="32" HorizontalAlignment="Left">
+            <Image Source="{Binding Type, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IconConverter}}" Margin="-2,-6,0,-6"/>
+        </Border>
+        <Separator Style="{DynamicResource VerticalSeparator}" Margin="5 0"/>
+        <Label Padding="0" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" Content="{Binding Name, UpdateSourceTrigger=PropertyChanged, FallbackValue=NO_NAME}" FontWeight="Bold"/>
+    </StackPanel>
 </UserControl>

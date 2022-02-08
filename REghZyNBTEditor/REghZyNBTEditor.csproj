@@ -58,11 +58,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Converters\NBTTypeToIconConverter.cs" />
+    <Compile Include="Converters\NBTTypeToResourceLocationConverter.cs" />
+    <Compile Include="Converters\PrimitiveNBTValuePreviewConverter.cs" />
     <Compile Include="NBT\Controls\NBTPrimitiveControl.xaml.cs">
       <DependentUpon>NBTPrimitiveControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="NBT\NBTBaseViewModel.cs" />
+    <Compile Include="NBT\NBTCollectiveViewModel.cs" />
     <Compile Include="NBT\NBTTagByteArrayViewModel.cs" />
     <Compile Include="NBT\NBTTagCompoundViewModel.cs" />
     <Compile Include="NBT\NBTTagDoubleViewModel.cs" />
@@ -76,6 +78,19 @@
     <Compile Include="NBT\NBTTagEndViewModel.cs" />
     <Compile Include="NBT\NBTTagStringViewModel.cs" />
     <Compile Include="NBT\NBTType.cs" />
+    <Compile Include="Themes\ColourfulDarkTheme.xaml.cs">
+      <DependentUpon>ColourfulDarkTheme.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Themes\ColourfulLightTheme.xaml.cs">
+      <DependentUpon>ColourfulLightTheme.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Themes\DarkTheme.xaml.cs">
+      <DependentUpon>DarkTheme.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Themes\LightTheme.xaml.cs">
+      <DependentUpon>LightTheme.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Themes\ThemesController.cs" />
     <Compile Include="Streams\BlockingStream.cs" />
     <Compile Include="Streams\DataInputStream.cs" />
     <Compile Include="Streams\DataOutputStream.cs" />
@@ -109,6 +124,22 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Themes\ColourfulDarkTheme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\ColourfulLightTheme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\DarkTheme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\LightTheme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -128,6 +159,18 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Assets\tagB8.psd" />
+    <None Include="Assets\tagBArray.psd" />
+    <None Include="Assets\tagCompound.psd" />
+    <None Include="Assets\tagDouble.psd" />
+    <None Include="Assets\tagEnd.psd" />
+    <None Include="Assets\tagFloat.psd" />
+    <None Include="Assets\tagI32.psd" />
+    <None Include="Assets\tagIArray.psd" />
+    <None Include="Assets\tagL64.psd" />
+    <None Include="Assets\tagList.psd" />
+    <None Include="Assets\tagS16.psd" />
+    <None Include="Assets\tagString.psd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -136,6 +179,21 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Assets\tagB8.png" />
+    <Resource Include="Assets\tagBArray.png" />
+    <Resource Include="Assets\tagCompound.png" />
+    <Resource Include="Assets\tagDouble.png" />
+    <Resource Include="Assets\tagFloat.png" />
+    <Resource Include="Assets\tagI32.png" />
+    <Resource Include="Assets\tagIArray.png" />
+    <Resource Include="Assets\tagL64.png" />
+    <Resource Include="Assets\tagList.png" />
+    <Resource Include="Assets\tagS16.png" />
+    <Resource Include="Assets\tagString.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\tagEnd.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

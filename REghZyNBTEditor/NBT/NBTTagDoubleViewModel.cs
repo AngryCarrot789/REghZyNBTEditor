@@ -2,7 +2,7 @@
 
 namespace REghZyNBTEditor.NBT {
     public class NBTTagDoubleViewModel : NBTBaseViewModel {
-        public override NBTType Type => NBTType.Integer;
+        public override NBTType Type => NBTType.Double;
 
         private double value;
         public double Value {
@@ -26,7 +26,7 @@ namespace REghZyNBTEditor.NBT {
             this.value = value;
         }
 
-        public override NBTBaseViewModel Copy() {
+        protected override NBTBaseViewModel CopyInternal() {
             return new NBTTagDoubleViewModel(this.name, this.value);
         }
 

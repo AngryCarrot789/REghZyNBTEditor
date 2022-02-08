@@ -6,86 +6,77 @@
         xmlns:local="clr-namespace:REghZyNBTEditor" 
         xmlns:viewmodels="clr-namespace:REghZyNBTEditor.ViewModels" 
         xmlns:nbtvm="clr-namespace:REghZyNBTEditor.NBT" 
-        xmlns:controls="clr-namespace:REghZyNBTEditor.NBT.Controls" xmlns:system="clr-namespace:System;assembly=mscorlib"
+        xmlns:controls="clr-namespace:REghZyNBTEditor.NBT.Controls" 
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800"
+        Style="{DynamicResource CustomWindowStyle}">
     <Window.DataContext>
         <viewmodels:MainViewModel/>
     </Window.DataContext>
     <Grid>
-        <Grid>
-            <TreeView ItemsSource="{Binding TreeItems}">
+        <Grid VerticalAlignment="Top" Height="45" Background="{DynamicResource ContainerBackground}">
+            <Menu VerticalAlignment="Top">
+                <MenuItem Header="File"/>
+                <MenuItem Header="Theme">
+                    <MenuItem Header="Dark" Template="{DynamicResource SingleDropDownMenuItem}" Click="MenuItemDarkClick"/>
+                    <MenuItem Header="Light" Template="{DynamicResource SingleDropDownMenuItem}" Click="MenuItemLightClick"/>
+                </MenuItem>
+            </Menu>
+            <Grid Margin="0,18,0,0">
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="Open" Margin="1 1 0 1" Background="Transparent" Width="48"/>
+                    <Button Content="Save" Margin="1 1 0 1" Background="Transparent" Width="48"/>
+                    <Button Content="Save as..." Margin="1 1 0 1" Background="Transparent" Width="56"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+        <Grid Margin="0,45,0,0">
+            <TreeView ItemsSource="{Binding TreeItems}" Background="{DynamicResource BackgroundColour}" 
+                      BorderThickness="0 1 0 0" HorizontalContentAlignment="Stretch" ScrollViewer.CanContentScroll="False">
                 <TreeView.Resources>
-                    <system:Double x:Key="IconSize">16</system:Double>
-
                     <HierarchicalDataTemplate DataType="{x:Type nbtvm:NBTTagEndViewModel}">
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="E" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="25" HorizontalAlignment="Left" FontSize="{StaticResource IconSize}" FontWeight="Bold"/>
-                            <Label Content="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" Margin="5 0 0 0"/>
-                        </StackPanel>
+                        <controls:NBTPrimitiveControl DataContext="{Binding}" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch"/>
                     </HierarchicalDataTemplate>
 
                     <HierarchicalDataTemplate DataType="{x:Type nbtvm:NBTTagByteViewModel}">
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="B" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="25" HorizontalAlignment="Left" FontSize="{StaticResource IconSize}" FontWeight="Bold"/>
-                            <Label Content="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" Margin="5 0 0 0"/>
-                        </StackPanel>
+                        <controls:NBTPrimitiveControl DataContext="{Binding}" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch"/>
                     </HierarchicalDataTemplate>
 
                     <HierarchicalDataTemplate DataType="{x:Type nbtvm:NBTTagIntViewModel}">
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="I" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="25" HorizontalAlignment="Left" FontSize="{StaticResource IconSize}" FontWeight="Bold"/>
-                            <Label Content="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" Margin="5 0 0 0"/>
-                        </StackPanel>
+                        <controls:NBTPrimitiveControl DataContext="{Binding}" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch"/>
                     </HierarchicalDataTemplate>
 
                     <HierarchicalDataTemplate DataType="{x:Type nbtvm:NBTTagLongViewModel}">
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="L" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="25" HorizontalAlignment="Left" FontSize="{StaticResource IconSize}" FontWeight="Bold"/>
-                            <Label Content="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" Margin="5 0 0 0"/>
-                        </StackPanel>
+                        <controls:NBTPrimitiveControl DataContext="{Binding}" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch"/>
                     </HierarchicalDataTemplate>
 
                     <HierarchicalDataTemplate DataType="{x:Type nbtvm:NBTTagFloatViewModel}">
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="F" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="25" HorizontalAlignment="Left" FontSize="{StaticResource IconSize}" FontWeight="Bold"/>
-                            <Label Content="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" Margin="5 0 0 0"/>
-                        </StackPanel>
+                        <controls:NBTPrimitiveControl DataContext="{Binding}" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch"/>
                     </HierarchicalDataTemplate>
 
                     <HierarchicalDataTemplate DataType="{x:Type nbtvm:NBTTagDoubleViewModel}">
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="D" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="25" HorizontalAlignment="Left" FontSize="{StaticResource IconSize}" FontWeight="Bold"/>
-                            <Label Content="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" Margin="5 0 0 0"/>
-                        </StackPanel>
+                        <controls:NBTPrimitiveControl DataContext="{Binding}" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch"/>
                     </HierarchicalDataTemplate>
 
                     <HierarchicalDataTemplate DataType="{x:Type nbtvm:NBTTagStringViewModel}">
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="'S'" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="25" HorizontalAlignment="Left" FontSize="{StaticResource IconSize}" FontWeight="Bold"/>
-                            <Label Content="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" Margin="5 0 0 0"/>
-                        </StackPanel>
+                        <controls:NBTPrimitiveControl DataContext="{Binding}" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch"/>
                     </HierarchicalDataTemplate>
 
                     <HierarchicalDataTemplate DataType="{x:Type nbtvm:NBTTagByteArrayViewModel}" ItemsSource="{Binding Value, UpdateSourceTrigger=PropertyChanged}">
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="B[]" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="25" HorizontalAlignment="Left" FontSize="{StaticResource IconSize}" FontWeight="Bold"/>
-                            <Label Content="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" Margin="5 0 0 0"/>
-                        </StackPanel>
+                        <controls:NBTPrimitiveControl DataContext="{Binding}" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch"/>
                     </HierarchicalDataTemplate>
 
                     <HierarchicalDataTemplate DataType="{x:Type nbtvm:NBTTagIntArrayViewModel}" ItemsSource="{Binding Value, UpdateSourceTrigger=PropertyChanged}">
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="I[]" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="25" HorizontalAlignment="Left" FontSize="{StaticResource IconSize}" FontWeight="Bold"/>
-                            <Label Content="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" Margin="5 0 0 0"/>
-                        </StackPanel>
+                        <controls:NBTPrimitiveControl DataContext="{Binding}" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch"/>
                     </HierarchicalDataTemplate>
 
                     <HierarchicalDataTemplate DataType="{x:Type nbtvm:NBTTagListViewModel}" ItemsSource="{Binding Data, UpdateSourceTrigger=PropertyChanged}">
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="&lt;&gt;" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="25" HorizontalAlignment="Left" FontSize="{StaticResource IconSize}" FontWeight="Bold"/>
-                            <Label Content="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" Margin="5 0 0 0"/>
-                        </StackPanel>
+                        <controls:NBTPrimitiveControl DataContext="{Binding}" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch"/>
+                    </HierarchicalDataTemplate>
+
+                    <HierarchicalDataTemplate DataType="{x:Type nbtvm:NBTTagCompoundViewModel}" ItemsSource="{Binding Data, UpdateSourceTrigger=PropertyChanged}">
+                        <controls:NBTPrimitiveControl DataContext="{Binding}" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch"/>
                     </HierarchicalDataTemplate>
                 </TreeView.Resources>
             </TreeView>

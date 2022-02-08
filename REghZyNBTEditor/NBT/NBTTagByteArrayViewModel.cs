@@ -4,12 +4,12 @@ using REghZyNBTEditor.Utilities;
 
 namespace REghZyNBTEditor.NBT {
     public class NBTTagByteArrayViewModel : NBTBaseViewModel {
-        public override NBTType Type => NBTType.Integer;
+        public override NBTType Type => NBTType.ByteArray;
 
-        private byte[] value;
-        public byte[] Value {
-            get => this.value;
-            set => RaisePropertyChanged(ref this.value, value);
+        private byte[] data;
+        public byte[] Data {
+            get => this.data;
+            set => RaisePropertyChanged(ref this.data, value);
         }
 
         public NBTTagByteArrayViewModel() {
@@ -21,26 +21,26 @@ namespace REghZyNBTEditor.NBT {
         }
 
         public NBTTagByteArrayViewModel(byte[] value) {
-            this.value = value;
+            this.data = value;
         }
 
         public NBTTagByteArrayViewModel(string name, byte[] value) : base(name) {
-            this.value = value;
+            this.data = value;
         }
 
-        public override NBTBaseViewModel Copy() {
-            return new NBTTagByteArrayViewModel(this.name, ArrayUtils.Copy(this.value));
+        protected override NBTBaseViewModel CopyInternal() {
+            return new NBTTagByteArrayViewModel(this.name, ArrayUtils.Copy(this.data));
         }
 
         public override void Read(IDataInput input) {
             uint size = input.ReadInt();
-            this.value = new byte[size];
-            input.Read(this.value, 0, (int) size);
+            this.data = new byte[size];
+            input.Read(this.data, 0, (int) size);
         }
 
         public override void Write(IDataOutput output) {
-            output.WriteInt((uint) this.value.Length);
-            output.Write(this.value, 0, this.value.Length);
+            output.WriteInt((uint) this.data.Length);
+            output.Write(this.data, 0, this.data.Length);
         }
     }
 }

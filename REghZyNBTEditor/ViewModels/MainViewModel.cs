@@ -17,7 +17,7 @@ namespace REghZyNBTEditor.ViewModels {
             this.TreeItems.Add(new NBTTagFloatViewModel("Hi!!"));
             this.TreeItems.Add(new NBTTagIntArrayViewModel("susi[]", new int[] { 25, 100, 420}));
             this.TreeItems.Add(new NBTTagListViewModel(
-                "susi[]", 
+                "liiist", 
                 new List<NBTBaseViewModel>() { 
                     new NBTTagStringViewModel("hi lol", "420"), 
                     new NBTTagIntViewModel("My int xd", 420) 
