@@ -3,10 +3,92 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:REghZyNBTEditor"
+        xmlns:local="clr-namespace:REghZyNBTEditor" 
+        xmlns:viewmodels="clr-namespace:REghZyNBTEditor.ViewModels" 
+        xmlns:nbtvm="clr-namespace:REghZyNBTEditor.NBT" 
+        xmlns:controls="clr-namespace:REghZyNBTEditor.NBT.Controls" xmlns:system="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.DataContext>
+        <viewmodels:MainViewModel/>
+    </Window.DataContext>
     <Grid>
-        
+        <Grid>
+            <TreeView ItemsSource="{Binding TreeItems}">
+                <TreeView.Resources>
+                    <system:Double x:Key="IconSize">16</system:Double>
+
+                    <HierarchicalDataTemplate DataType="{x:Type nbtvm:NBTTagEndViewModel}">
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="E" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="25" HorizontalAlignment="Left" FontSize="{StaticResource IconSize}" FontWeight="Bold"/>
+                            <Label Content="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" Margin="5 0 0 0"/>
+                        </StackPanel>
+                    </HierarchicalDataTemplate>
+
+                    <HierarchicalDataTemplate DataType="{x:Type nbtvm:NBTTagByteViewModel}">
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="B" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="25" HorizontalAlignment="Left" FontSize="{StaticResource IconSize}" FontWeight="Bold"/>
+                            <Label Content="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" Margin="5 0 0 0"/>
+                        </StackPanel>
+                    </HierarchicalDataTemplate>
+
+                    <HierarchicalDataTemplate DataType="{x:Type nbtvm:NBTTagIntViewModel}">
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="I" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="25" HorizontalAlignment="Left" FontSize="{StaticResource IconSize}" FontWeight="Bold"/>
+                            <Label Content="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" Margin="5 0 0 0"/>
+                        </StackPanel>
+                    </HierarchicalDataTemplate>
+
+                    <HierarchicalDataTemplate DataType="{x:Type nbtvm:NBTTagLongViewModel}">
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="L" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="25" HorizontalAlignment="Left" FontSize="{StaticResource IconSize}" FontWeight="Bold"/>
+                            <Label Content="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" Margin="5 0 0 0"/>
+                        </StackPanel>
+                    </HierarchicalDataTemplate>
+
+                    <HierarchicalDataTemplate DataType="{x:Type nbtvm:NBTTagFloatViewModel}">
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="F" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="25" HorizontalAlignment="Left" FontSize="{StaticResource IconSize}" FontWeight="Bold"/>
+                            <Label Content="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" Margin="5 0 0 0"/>
+                        </StackPanel>
+                    </HierarchicalDataTemplate>
+
+                    <HierarchicalDataTemplate DataType="{x:Type nbtvm:NBTTagDoubleViewModel}">
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="D" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="25" HorizontalAlignment="Left" FontSize="{StaticResource IconSize}" FontWeight="Bold"/>
+                            <Label Content="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" Margin="5 0 0 0"/>
+                        </StackPanel>
+                    </HierarchicalDataTemplate>
+
+                    <HierarchicalDataTemplate DataType="{x:Type nbtvm:NBTTagStringViewModel}">
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="'S'" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="25" HorizontalAlignment="Left" FontSize="{StaticResource IconSize}" FontWeight="Bold"/>
+                            <Label Content="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" Margin="5 0 0 0"/>
+                        </StackPanel>
+                    </HierarchicalDataTemplate>
+
+                    <HierarchicalDataTemplate DataType="{x:Type nbtvm:NBTTagByteArrayViewModel}" ItemsSource="{Binding Value, UpdateSourceTrigger=PropertyChanged}">
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="B[]" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="25" HorizontalAlignment="Left" FontSize="{StaticResource IconSize}" FontWeight="Bold"/>
+                            <Label Content="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" Margin="5 0 0 0"/>
+                        </StackPanel>
+                    </HierarchicalDataTemplate>
+
+                    <HierarchicalDataTemplate DataType="{x:Type nbtvm:NBTTagIntArrayViewModel}" ItemsSource="{Binding Value, UpdateSourceTrigger=PropertyChanged}">
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="I[]" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="25" HorizontalAlignment="Left" FontSize="{StaticResource IconSize}" FontWeight="Bold"/>
+                            <Label Content="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" Margin="5 0 0 0"/>
+                        </StackPanel>
+                    </HierarchicalDataTemplate>
+
+                    <HierarchicalDataTemplate DataType="{x:Type nbtvm:NBTTagListViewModel}" ItemsSource="{Binding Data, UpdateSourceTrigger=PropertyChanged}">
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="&lt;&gt;" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="25" HorizontalAlignment="Left" FontSize="{StaticResource IconSize}" FontWeight="Bold"/>
+                            <Label Content="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" Margin="5 0 0 0"/>
+                        </StackPanel>
+                    </HierarchicalDataTemplate>
+                </TreeView.Resources>
+            </TreeView>
+        </Grid>
     </Grid>
 </Window>
