@@ -1,9 +1,10 @@
 ﻿using System;
 using REghZyIOWrapperV2.Streams;
-using REghZyNBTEditor.Utilities;
+using REghZyMVVM.Utils;
+using REghZyNBTEditor.NBT.Base;
 
 namespace REghZyNBTEditor.NBT {
-    public class NBTTagByteArrayViewModel : NBTBaseViewModel {
+    public class NBTTagByteArrayViewModel : NBTArrayViewModel {
         public override NBTType Type => NBTType.ByteArray;
 
         private byte[] data;
@@ -29,7 +30,7 @@ namespace REghZyNBTEditor.NBT {
         }
 
         protected override NBTBaseViewModel CopyInternal() {
-            return new NBTTagByteArrayViewModel(this.name, ArrayUtils.Copy(this.data));
+            return new NBTTagByteArrayViewModel(this.name, this.data.Copy());
         }
 
         public override void Read(IDataInput input) {
@@ -41,6 +42,14 @@ namespace REghZyNBTEditor.NBT {
         public override void Write(IDataOutput output) {
             output.WriteInt((uint) this.data.Length);
             output.Write(this.data, 0, this.data.Length);
+        }
+
+        public void AddData(byte value) {
+            this.Data = this.data.AddValue(value);
+        }
+
+        public void InsertData(byte value, int index) {
+            this.Data = this.data.InsertValue(value, index);
         }
     }
 }

@@ -1,0 +1,15 @@
+﻿<UserControl x:Class="REghZyNBTEditor.NBT.Controls.NBTCompoundControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:REghZyNBTEditor.NBT.Controls" 
+             xmlns:nbt="clr-namespace:REghZyNBTEditor.NBT" 
+             d:DataContext="{d:DesignInstance Type=nbt:NBTTagCompoundViewModel}"
+             mc:Ignorable="d" 
+             d:DesignWidth="200">
+    <StackPanel Orientation="Horizontal">
+        <local:NBTHeaderControl DataContext="{Binding}"/>
+        <TextBlock Padding="3 0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Map.Count, UpdateSourceTrigger=PropertyChanged, StringFormat={}({0} entries)}"/>
+    </StackPanel>
+</UserControl>

@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Net.Http;
+using REghZyNBTEditor.NBT.Base;
 
 namespace REghZyNBTEditor.NBT {
     public enum NBTType {

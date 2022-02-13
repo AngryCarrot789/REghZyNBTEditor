@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using REghZyFramework.Utilities;
 using REghZyIOWrapperV2.Streams;
+using REghZyMVVM.ViewModels;
+using REghZyNBTEditor.NBT.Base;
 
 namespace REghZyNBTEditor.NBT {
     public abstract class NBTBaseViewModel : BaseViewModel {
         protected NBTCollectiveViewModel parent;
         protected string name;
+        protected bool isExpanded;
 
         /// <summary>
         /// The NBT type
@@ -20,6 +22,15 @@ namespace REghZyNBTEditor.NBT {
         public string Name {
             get => this.name;
             set => this.RaisePropertyChanged(ref this.name, value);
+        }
+
+        public bool IsExpanded {
+            get => this.isExpanded;
+            set => RaisePropertyChanged(ref this.isExpanded, value);
+        }
+
+        public bool CanExpand {
+            get => this.Type == NBTType.List || this.Type == NBTType.Compound;
         }
 
         /// <summary>
@@ -97,6 +108,11 @@ namespace REghZyNBTEditor.NBT {
 
             sb.Append(names[names.Count - 1]);
             return sb.ToString();
+        }
+
+        public NBTBaseViewModel SetName(string name) {
+            this.name = name;
+            return this;
         }
     }
 }

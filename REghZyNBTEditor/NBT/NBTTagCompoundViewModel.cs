@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using REghZyIOWrapperV2.Streams;
-using REghZyNBTEditor.Utilities;
+using REghZyNBTEditor.NBT.Base;
 
 namespace REghZyNBTEditor.NBT {
     public class NBTTagCompoundViewModel : NBTCollectiveViewModel {
@@ -21,18 +20,22 @@ namespace REghZyNBTEditor.NBT {
 
         public NBTTagCompoundViewModel() {
             this.map = new Dictionary<string, NBTBaseViewModel>();
+            SortMap();
         }
 
         public NBTTagCompoundViewModel(string name) : base(name) {
             this.map = new Dictionary<string, NBTBaseViewModel>();
+            SortMap();
         }
 
         public NBTTagCompoundViewModel(Dictionary<string, NBTBaseViewModel> map) {
             this.map = map;
+            SortMap();
         }
 
         public NBTTagCompoundViewModel(string name, Dictionary<string, NBTBaseViewModel> map) : base(name) {
             this.map = map;
+            SortMap();
         }
 
         public void SetTag(string tagName, NBTBaseViewModel nbt) {
@@ -71,6 +74,15 @@ namespace REghZyNBTEditor.NBT {
             }
 
             output.WriteByte(0);
+        }
+
+        public void SortMap() {
+            // Dictionary<string, NBTBaseViewModel> map = new Dictionary<string, NBTBaseViewModel>();
+            // foreach (KeyValuePair<string, NBTBaseViewModel> entry in this.map.OrderBy((entry) => { return entry.Value.Type == NBTType.Compound; })) {
+            //     map[entry.Key] = entry.Value;
+            // }
+            // 
+            // this.Map = map;
         }
     }
 }

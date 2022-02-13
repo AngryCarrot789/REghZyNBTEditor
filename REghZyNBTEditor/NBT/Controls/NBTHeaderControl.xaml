@@ -1,0 +1,18 @@
+﻿<UserControl x:Class="REghZyNBTEditor.NBT.Controls.NBTHeaderControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:REghZyNBTEditor.NBT.Controls" 
+             xmlns:nbt="clr-namespace:REghZyNBTEditor.NBT" 
+             d:DataContext="{d:DesignInstance Type=nbt:NBTBaseViewModel}"
+             mc:Ignorable="d" 
+             d:DesignWidth="200">
+    <StackPanel Orientation="Horizontal">
+        <Border Width="65" HorizontalAlignment="Left">
+            <TextBlock Text="{Binding Type, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Foreground="{DynamicResource ControlDefaultForeground}"/>
+        </Border>
+        <Separator Background="Transparent" Style="{DynamicResource VerticalSeparator}" Margin="4 0"/>
+        <Label Padding="0" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" Content="{Binding Name, UpdateSourceTrigger=PropertyChanged, FallbackValue=NO_NAME}" FontWeight="Bold"/>
+    </StackPanel>
+</UserControl>

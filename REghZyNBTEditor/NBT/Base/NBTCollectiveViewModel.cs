@@ -1,4 +1,4 @@
-﻿namespace REghZyNBTEditor.NBT {
+﻿namespace REghZyNBTEditor.NBT.Base {
     public abstract class NBTCollectiveViewModel : NBTBaseViewModel {
         protected NBTCollectiveViewModel() {
 

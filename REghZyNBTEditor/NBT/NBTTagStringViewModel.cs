@@ -1,7 +1,8 @@
 ﻿using REghZyIOWrapperV2.Streams;
+using REghZyNBTEditor.NBT.Base;
 
 namespace REghZyNBTEditor.NBT {
-    public class NBTTagStringViewModel : NBTBaseViewModel {
+    public class NBTTagStringViewModel : NBTPrimitiveViewModel {
         public override NBTType Type => NBTType.String;
 
         private string value;

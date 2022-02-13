@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using REghZyIOWrapperV2.Streams;
+using REghZyNBTEditor.NBT.Base;
 
 namespace REghZyNBTEditor.NBT {
     public class NBTTagListViewModel : NBTCollectiveViewModel {

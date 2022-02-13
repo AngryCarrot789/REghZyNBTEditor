@@ -15,7 +15,7 @@ namespace REghZyNBTEditor.Converters {
                 return "WPF-Designer-Value";
             }
             else if (value is string) {
-                return value;
+                return $"'{value}'";
             }
             else if (value is byte || value is short || value is int || value is long) {
                 return value;
@@ -39,7 +39,7 @@ namespace REghZyNBTEditor.Converters {
                 return $"{map.Count} entries";
             }
             else {
-                return "ERROR: " + value == null ? "NULL" : value.GetType().ToString();
+                return "ERROR: " + value.GetType();
             }
         }
 

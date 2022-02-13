@@ -1,7 +1,8 @@
 ﻿using REghZyIOWrapperV2.Streams;
+using REghZyNBTEditor.NBT.Base;
 
 namespace REghZyNBTEditor.NBT {
-    public class NBTTagLongViewModel : NBTBaseViewModel {
+    public class NBTTagLongViewModel : NBTPrimitiveViewModel {
         public override NBTType Type => NBTType.Long;
 
         private long value;

@@ -1,7 +1,8 @@
 ﻿using REghZyIOWrapperV2.Streams;
+using REghZyNBTEditor.NBT.Base;
 
 namespace REghZyNBTEditor.NBT {
-    public class NBTTagDoubleViewModel : NBTBaseViewModel {
+    public class NBTTagDoubleViewModel : NBTPrimitiveViewModel {
         public override NBTType Type => NBTType.Double;
 
         private double value;

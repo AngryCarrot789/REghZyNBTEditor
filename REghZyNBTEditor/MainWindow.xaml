@@ -6,16 +6,22 @@
         xmlns:local="clr-namespace:REghZyNBTEditor" 
         xmlns:viewmodels="clr-namespace:REghZyNBTEditor.ViewModels" 
         xmlns:nbtvm="clr-namespace:REghZyNBTEditor.NBT" 
+        xmlns:nbtvm2="clr-namespace:REghZyNBTEditor.NBT.Base" 
         xmlns:controls="clr-namespace:REghZyNBTEditor.NBT.Controls" 
-        xmlns:system="clr-namespace:System;assembly=mscorlib"
+        xmlns:system="clr-namespace:System;assembly=mscorlib" xmlns:converters="clr-namespace:REghZyNBTEditor.Converters"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
+        Title="MainWindow" 
+        Width="1024"
+        Height="640" 
         Style="{DynamicResource CustomWindowStyle}">
+    <Window.Resources>
+        <converters:NBTCollectionConverter x:Key="NBTCollectionConverter"/>
+    </Window.Resources>
     <Window.DataContext>
         <viewmodels:MainViewModel/>
     </Window.DataContext>
     <Grid>
-        <Grid VerticalAlignment="Top" Height="45" Background="{DynamicResource ContainerBackground}">
+        <Grid VerticalAlignment="Top" Height="45" Background="{DynamicResource ContainerBorder}">
             <Menu VerticalAlignment="Top">
                 <MenuItem Header="File"/>
                 <MenuItem Header="Theme">
@@ -27,59 +33,68 @@
                 <StackPanel Orientation="Horizontal">
                     <Button Content="Open" Margin="1 1 0 1" Background="Transparent" Width="48"/>
                     <Button Content="Save" Margin="1 1 0 1" Background="Transparent" Width="48"/>
-                    <Button Content="Save as..." Margin="1 1 0 1" Background="Transparent" Width="56"/>
+                    <Button DataContext="{Binding}" Command="{Binding MyCMD}" Content="Save as..." Margin="1 1 0 1" Background="Transparent" Width="56"/>
                 </StackPanel>
             </Grid>
         </Grid>
         <Grid Margin="0,45,0,0">
-            <TreeView ItemsSource="{Binding TreeItems}" Background="{DynamicResource BackgroundColour}" 
-                      BorderThickness="0 1 0 0" HorizontalContentAlignment="Stretch" ScrollViewer.CanContentScroll="False">
-                <TreeView.Resources>
-                    <HierarchicalDataTemplate DataType="{x:Type nbtvm:NBTTagEndViewModel}">
-                        <controls:NBTPrimitiveControl DataContext="{Binding}" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch"/>
-                    </HierarchicalDataTemplate>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="8*"/>
+            </Grid.ColumnDefinitions>
+            <Grid>
+                <TreeView ItemsSource="{Binding TreeItems}" Background="{DynamicResource ContainerBorder}" 
+                          BorderThickness="0 0 0 0" HorizontalContentAlignment="Stretch" ScrollViewer.CanContentScroll="False"
+                          SelectedItemChanged="TreeView_SelectedItemChanged">
+                    <TreeView.ItemContainerStyle>
+                        <Style TargetType="{x:Type TreeViewItem}">
+                            <Setter Property="IsExpanded" Value="{Binding IsExpanded, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                        </Style>
+                    </TreeView.ItemContainerStyle>
+                    <TreeView.Resources>
+                        <HierarchicalDataTemplate DataType="{x:Type nbtvm:NBTTagEndViewModel}"/>
+                        <HierarchicalDataTemplate DataType="{x:Type nbtvm:NBTTagStringViewModel}">
+                            <controls:NBTStringControl DataContext="{Binding}"/>
+                        </HierarchicalDataTemplate>
 
-                    <HierarchicalDataTemplate DataType="{x:Type nbtvm:NBTTagByteViewModel}">
-                        <controls:NBTPrimitiveControl DataContext="{Binding}" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch"/>
-                    </HierarchicalDataTemplate>
+                        <HierarchicalDataTemplate DataType="{x:Type nbtvm2:NBTPrimitiveViewModel}">
+                            <controls:NBTPrimitiveControl DataContext="{Binding}"/>
+                        </HierarchicalDataTemplate>
 
-                    <HierarchicalDataTemplate DataType="{x:Type nbtvm:NBTTagIntViewModel}">
-                        <controls:NBTPrimitiveControl DataContext="{Binding}" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch"/>
-                    </HierarchicalDataTemplate>
+                        <HierarchicalDataTemplate DataType="{x:Type nbtvm2:NBTArrayViewModel}">
+                            <controls:NBTArrayControl DataContext="{Binding}"/>
+                        </HierarchicalDataTemplate>
 
-                    <HierarchicalDataTemplate DataType="{x:Type nbtvm:NBTTagLongViewModel}">
-                        <controls:NBTPrimitiveControl DataContext="{Binding}" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch"/>
-                    </HierarchicalDataTemplate>
+                        <HierarchicalDataTemplate DataType="{x:Type nbtvm:NBTTagListViewModel}" ItemsSource="{Binding Data, UpdateSourceTrigger=PropertyChanged}">
+                            <controls:NBTListControl DataContext="{Binding}"/>
+                        </HierarchicalDataTemplate>
 
-                    <HierarchicalDataTemplate DataType="{x:Type nbtvm:NBTTagFloatViewModel}">
-                        <controls:NBTPrimitiveControl DataContext="{Binding}" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch"/>
-                    </HierarchicalDataTemplate>
+                        <HierarchicalDataTemplate DataType="{x:Type nbtvm:NBTTagCompoundViewModel}" ItemsSource="{Binding Map.Values, UpdateSourceTrigger=PropertyChanged}">
+                            <controls:NBTCompoundControl DataContext="{Binding}"/>
+                        </HierarchicalDataTemplate>
+                    </TreeView.Resources>
+                </TreeView>
+            </Grid>
 
-                    <HierarchicalDataTemplate DataType="{x:Type nbtvm:NBTTagDoubleViewModel}">
-                        <controls:NBTPrimitiveControl DataContext="{Binding}" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch"/>
-                    </HierarchicalDataTemplate>
+            <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{DynamicResource ContainerBorder}"/>
 
-                    <HierarchicalDataTemplate DataType="{x:Type nbtvm:NBTTagStringViewModel}">
-                        <controls:NBTPrimitiveControl DataContext="{Binding}" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch"/>
-                    </HierarchicalDataTemplate>
-
-                    <HierarchicalDataTemplate DataType="{x:Type nbtvm:NBTTagByteArrayViewModel}" ItemsSource="{Binding Value, UpdateSourceTrigger=PropertyChanged}">
-                        <controls:NBTPrimitiveControl DataContext="{Binding}" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch"/>
-                    </HierarchicalDataTemplate>
-
-                    <HierarchicalDataTemplate DataType="{x:Type nbtvm:NBTTagIntArrayViewModel}" ItemsSource="{Binding Value, UpdateSourceTrigger=PropertyChanged}">
-                        <controls:NBTPrimitiveControl DataContext="{Binding}" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch"/>
-                    </HierarchicalDataTemplate>
-
-                    <HierarchicalDataTemplate DataType="{x:Type nbtvm:NBTTagListViewModel}" ItemsSource="{Binding Data, UpdateSourceTrigger=PropertyChanged}">
-                        <controls:NBTPrimitiveControl DataContext="{Binding}" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch"/>
-                    </HierarchicalDataTemplate>
-
-                    <HierarchicalDataTemplate DataType="{x:Type nbtvm:NBTTagCompoundViewModel}" ItemsSource="{Binding Data, UpdateSourceTrigger=PropertyChanged}">
-                        <controls:NBTPrimitiveControl DataContext="{Binding}" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch"/>
-                    </HierarchicalDataTemplate>
-                </TreeView.Resources>
-            </TreeView>
+            <Grid Grid.Column="2">
+                <Grid.Resources>
+                    <converters:NBTCollectionConverter x:Key="CollectionConverter"/>
+                </Grid.Resources>
+                <ListView Background="{DynamicResource BackgroundColour}"
+                          DataContext="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged}"
+                          ItemsSource="{Binding Converter={StaticResource NBTCollectionConverter}, Mode=OneWay}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Name" Width="250" DisplayMemberBinding="{Binding Name, UpdateSourceTrigger=PropertyChanged}">
+                                
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Grid>
         </Grid>
     </Grid>
 </Window>

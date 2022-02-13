@@ -1,9 +1,10 @@
 ﻿using System;
 using REghZyIOWrapperV2.Streams;
-using REghZyNBTEditor.Utilities;
+using REghZyMVVM.Utils;
+using REghZyNBTEditor.NBT.Base;
 
 namespace REghZyNBTEditor.NBT {
-    public class NBTTagIntArrayViewModel : NBTBaseViewModel {
+    public class NBTTagIntArrayViewModel : NBTArrayViewModel {
         public override NBTType Type => NBTType.IntArray;
 
         private int[] data;
@@ -29,7 +30,7 @@ namespace REghZyNBTEditor.NBT {
         }
 
         protected override NBTBaseViewModel CopyInternal() {
-            return new NBTTagIntArrayViewModel(this.name, ArrayUtils.Copy(this.data));
+            return new NBTTagIntArrayViewModel(this.name, this.data.Copy());
         }
 
         public override void Read(IDataInput input) {
