@@ -64,9 +64,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AttachedProperties\ListViewAttachedProperty.cs" />
+    <Compile Include="AttachedProperties\ListViewItemAttachedProperty.cs" />
     <Compile Include="Converters\NBTCollectionConverter.cs" />
     <Compile Include="Converters\NBTTypeToResourceLocationConverter.cs" />
     <Compile Include="Converters\PrimitiveNBTValuePreviewConverter.cs" />
+    <Compile Include="IoC.cs" />
+    <Compile Include="ITreeViewSelector.cs" />
     <Compile Include="NBT\Base\NBTArrayViewModel.cs" />
     <Compile Include="NBT\Controls\NBTArrayControl.xaml.cs">
       <DependentUpon>NBTArrayControl.xaml</DependentUpon>
@@ -102,19 +106,6 @@
     <Compile Include="NBT\NBTTagEndViewModel.cs" />
     <Compile Include="NBT\NBTTagStringViewModel.cs" />
     <Compile Include="NBT\NBTType.cs" />
-    <Compile Include="Themes\ColourfulDarkTheme.xaml.cs">
-      <DependentUpon>ColourfulDarkTheme.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Themes\ColourfulLightTheme.xaml.cs">
-      <DependentUpon>ColourfulLightTheme.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Themes\DarkTheme.xaml.cs">
-      <DependentUpon>DarkTheme.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Themes\LightTheme.xaml.cs">
-      <DependentUpon>LightTheme.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Themes\ThemesController.cs" />
     <Compile Include="Streams\BlockingStream.cs" />
     <Compile Include="Streams\DataInputStream.cs" />
     <Compile Include="Streams\DataOutputStream.cs" />
@@ -122,6 +113,11 @@
     <Compile Include="Streams\EnumConversion.cs" />
     <Compile Include="Streams\IDataInput.cs" />
     <Compile Include="Streams\IDataOutput.cs" />
+    <Compile Include="Themes\Controls.xaml.cs">
+      <DependentUpon>Controls.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Themes\ThemesController.cs" />
+    <Compile Include="Themes\ThemeTypes.cs" />
     <Compile Include="Utilities\ScrollViewerHelper.cs" />
     <Compile Include="ViewModels\DataPreviewViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
@@ -162,19 +158,31 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Themes\ColourfulDarkTheme.xaml">
+    <Page Include="Themes\ControlColours.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Themes\ColourfulLightTheme.xaml">
+    <Page Include="Themes\Controls.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Themes\DarkTheme.xaml">
+    <Page Include="Themes\Dark_DarkBackDarkBorder.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Themes\LightTheme.xaml">
+    <Page Include="Themes\Dark_DarkBackLightBorder.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\NBTTreeStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\RedBlackTheme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\VeryDarkTheme.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -197,17 +205,27 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="Assets\tagB8.psd" />
-    <None Include="Assets\tagBArray.psd" />
+    <None Include="Assets\OldIcons\tagB8.psd" />
+    <None Include="Assets\OldIcons\tagBArray.psd" />
+    <None Include="Assets\OldIcons\tagCompound.psd" />
+    <None Include="Assets\OldIcons\tagDouble.psd" />
+    <None Include="Assets\OldIcons\tagEnd.psd" />
+    <None Include="Assets\OldIcons\tagFloat.psd" />
+    <None Include="Assets\OldIcons\tagI32.psd" />
+    <None Include="Assets\OldIcons\tagIArray.psd" />
+    <None Include="Assets\OldIcons\tagL64.psd" />
+    <None Include="Assets\OldIcons\tagList.psd" />
+    <None Include="Assets\OldIcons\tagS16.psd" />
+    <None Include="Assets\OldIcons\tagString.psd" />
+    <None Include="Assets\tagArrayInt32.psd" />
+    <None Include="Assets\tagArrayInt8.psd" />
     <None Include="Assets\tagCompound.psd" />
-    <None Include="Assets\tagDouble.psd" />
-    <None Include="Assets\tagEnd.psd" />
-    <None Include="Assets\tagFloat.psd" />
-    <None Include="Assets\tagI32.psd" />
-    <None Include="Assets\tagIArray.psd" />
-    <None Include="Assets\tagL64.psd" />
-    <None Include="Assets\tagList.psd" />
-    <None Include="Assets\tagS16.psd" />
+    <None Include="Assets\tagDouble64.psd" />
+    <None Include="Assets\tagFloat32.psd" />
+    <None Include="Assets\tagInt16.psd" />
+    <None Include="Assets\tagInt32.psd" />
+    <None Include="Assets\tagInt64.psd" />
+    <None Include="Assets\tagInt8.psd" />
     <None Include="Assets\tagString.psd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -218,21 +236,32 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\tagB8.png" />
-    <Resource Include="Assets\tagBArray.png" />
-    <Resource Include="Assets\tagCompound.png" />
-    <Resource Include="Assets\tagDouble.png" />
-    <Resource Include="Assets\tagFloat.png" />
-    <Resource Include="Assets\tagI32.png" />
-    <Resource Include="Assets\tagIArray.png" />
-    <Resource Include="Assets\tagL64.png" />
-    <Resource Include="Assets\tagList.png" />
-    <Resource Include="Assets\tagS16.png" />
-    <Resource Include="Assets\tagString.png" />
+    <Resource Include="Assets\OldIcons\tagB8.png" />
+    <Resource Include="Assets\OldIcons\tagBArray.png" />
+    <Resource Include="Assets\OldIcons\tagCompound.png" />
+    <Resource Include="Assets\OldIcons\tagDouble.png" />
+    <Resource Include="Assets\OldIcons\tagFloat.png" />
+    <Resource Include="Assets\OldIcons\tagI32.png" />
+    <Resource Include="Assets\OldIcons\tagIArray.png" />
+    <Resource Include="Assets\OldIcons\tagL64.png" />
+    <Resource Include="Assets\OldIcons\tagList.png" />
+    <Resource Include="Assets\OldIcons\tagS16.png" />
+    <Resource Include="Assets\OldIcons\tagString.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\tagEnd.png" />
+    <Resource Include="Assets\OldIcons\tagEnd.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Assets\tagArrayInt32.png" />
+    <Resource Include="Assets\tagArrayInt8.png" />
+    <Resource Include="Assets\tagCompound.png" />
+    <Resource Include="Assets\tagDouble64.png" />
+    <Resource Include="Assets\tagFloat32.png" />
+    <Resource Include="Assets\tagInt16.png" />
+    <Resource Include="Assets\tagInt32.png" />
+    <Resource Include="Assets\tagInt64.png" />
+    <Resource Include="Assets\tagInt8.png" />
+    <Resource Include="Assets\tagString.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -12,6 +12,6 @@
         <local:NBTHeaderControl DataContext="{Binding}"/>
         <TextBlock Padding="1" HorizontalAlignment="Left" VerticalAlignment="Center" 
                    Text="{Binding Value, UpdateSourceTrigger=PropertyChanged, FallbackValue=NO_NAME}" 
-                   FontStyle="Italic" FontFamily="Consolas"/>
+                   FontStyle="Italic" FontFamily="Consolas" Foreground="{DynamicResource AREghZyBrush.Glyph.Disabled}"/>
     </StackPanel>
 </UserControl>

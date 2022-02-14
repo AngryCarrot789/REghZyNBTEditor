@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Input;
 using REghZyIOWrapperV2.Streams;
+using REghZyMVVM.Commands;
 using REghZyMVVM.ViewModels;
 using REghZyNBTEditor.NBT.Base;
 
@@ -26,8 +28,14 @@ namespace REghZyNBTEditor.NBT {
 
         public bool IsExpanded {
             get => this.isExpanded;
-            set => RaisePropertyChanged(ref this.isExpanded, value);
+            set {
+                if (this.CanExpand) {
+                    RaisePropertyChanged(ref this.isExpanded, value);
+                }
+            }
         }
+
+        public ICommand ExpandCommand { get; set; }
 
         public bool CanExpand {
             get => this.Type == NBTType.List || this.Type == NBTType.Compound;
@@ -42,10 +50,13 @@ namespace REghZyNBTEditor.NBT {
         }
 
         public NBTBaseViewModel() {
-
+            this.ExpandCommand = new RelayCommand(() => {
+                IoC.MainViewModel.NavigateToSelectedPreview();
+                this.IsExpanded = true;
+            });
         }
 
-        public NBTBaseViewModel(string name) {
+        public NBTBaseViewModel(string name) : this() {
             this.name = name;
         }
 

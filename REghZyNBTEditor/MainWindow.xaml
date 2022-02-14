@@ -8,7 +8,10 @@
         xmlns:nbtvm="clr-namespace:REghZyNBTEditor.NBT" 
         xmlns:nbtvm2="clr-namespace:REghZyNBTEditor.NBT.Base" 
         xmlns:controls="clr-namespace:REghZyNBTEditor.NBT.Controls" 
-        xmlns:system="clr-namespace:System;assembly=mscorlib" xmlns:converters="clr-namespace:REghZyNBTEditor.Converters"
+        xmlns:system="clr-namespace:System;assembly=mscorlib" 
+        xmlns:converters="clr-namespace:REghZyNBTEditor.Converters"
+        xmlns:ap="clr-namespace:REghZyNBTEditor.AttachedProperties"
+        d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
         mc:Ignorable="d"
         Title="MainWindow" 
         Width="1024"
@@ -16,24 +19,25 @@
         Style="{DynamicResource CustomWindowStyle}">
     <Window.Resources>
         <converters:NBTCollectionConverter x:Key="NBTCollectionConverter"/>
+        <converters:NBTTypeToResourceLocationConverter x:Key="NbtIconConverter"/>
     </Window.Resources>
-    <Window.DataContext>
-        <viewmodels:MainViewModel/>
-    </Window.DataContext>
     <Grid>
-        <Grid VerticalAlignment="Top" Height="45" Background="{DynamicResource ContainerBorder}">
+        <Grid VerticalAlignment="Top" Height="45" Background="{DynamicResource AREghZyBrush.Deep.3.Background.Static}">
             <Menu VerticalAlignment="Top">
                 <MenuItem Header="File"/>
                 <MenuItem Header="Theme">
-                    <MenuItem Header="Dark" Template="{DynamicResource SingleDropDownMenuItem}" Click="MenuItemDarkClick"/>
-                    <MenuItem Header="Light" Template="{DynamicResource SingleDropDownMenuItem}" Click="MenuItemLightClick"/>
+                    <MenuItem Header="Dark" Click="MenuItemDarkClick"/>
+                    <MenuItem Header="Light" Click="MenuItemLightClick"/>
                 </MenuItem>
             </Menu>
             <Grid Margin="0,18,0,0">
                 <StackPanel Orientation="Horizontal">
-                    <Button Content="Open" Margin="1 1 0 1" Background="Transparent" Width="48"/>
+                    <ToggleButton Content="Open" Margin="1 1 0 1" Background="Transparent" Width="48"/>
                     <Button Content="Save" Margin="1 1 0 1" Background="Transparent" Width="48"/>
-                    <Button DataContext="{Binding}" Command="{Binding MyCMD}" Content="Save as..." Margin="1 1 0 1" Background="Transparent" Width="56"/>
+                    <Button DataContext="{Binding}" Content="Save as..." Margin="1 1 0 1" Background="Transparent" Width="56"/>
+                    <TreeView>
+                        <TreeViewItem Width="106">hello</TreeViewItem>
+                    </TreeView>
                 </StackPanel>
             </Grid>
         </Grid>
@@ -41,15 +45,89 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="5*"/>
                 <ColumnDefinition Width="5"/>
-                <ColumnDefinition Width="8*"/>
+                <ColumnDefinition Width="12*"/>
             </Grid.ColumnDefinitions>
             <Grid>
-                <TreeView ItemsSource="{Binding TreeItems}" Background="{DynamicResource ContainerBorder}" 
-                          BorderThickness="0 0 0 0" HorizontalContentAlignment="Stretch" ScrollViewer.CanContentScroll="False"
-                          SelectedItemChanged="TreeView_SelectedItemChanged">
+                <TreeView ItemsSource="{Binding TreeItems}"
+                          BorderThickness="0 0 0 0" HorizontalContentAlignment="Stretch"
+                          SelectedItemChanged="TreeView_SelectedItemChanged"
+                          Background="{DynamicResource AREghZyBrush.Deep.3.Background.Static}"
+                          x:Name="Tree">
                     <TreeView.ItemContainerStyle>
                         <Style TargetType="{x:Type TreeViewItem}">
+                            <Setter Property="Background" Value="{StaticResource TreeViewItem.Static.Background}"/>
+                            <Setter Property="BorderBrush" Value="{StaticResource TreeViewItem.Static.Border}"/>
+                            <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+                            <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+                            <Setter Property="Padding" Value="1,0,0,0"/>
+                            <Setter Property="Foreground" Value="{DynamicResource AREghZyBrush.Foreground.Static}"/>
+                            <Setter Property="FocusVisualStyle" Value="{StaticResource TreeViewItemFocusVisual}"/>
                             <Setter Property="IsExpanded" Value="{Binding IsExpanded, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type TreeViewItem}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition MinWidth="19" Width="Auto"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition/>
+                                            </Grid.RowDefinitions>
+                                            <ToggleButton x:Name="Expander" ClickMode="Press" 
+                                                          IsChecked="{Binding IsExpanded, RelativeSource={RelativeSource TemplatedParent}}" 
+                                                          Style="{StaticResource ExpandCollapseToggleStyle}"/>
+                                            <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" 
+                                                    BorderThickness="{TemplateBinding BorderThickness}" 
+                                                    Background="{TemplateBinding Background}" Grid.Column="1" 
+                                                    Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true">
+                                                <ContentPresenter x:Name="PART_Header" ContentSource="Header" 
+                                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                            </Border>
+                                            <ItemsPresenter x:Name="ItemsHost" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="1"/>
+                                        </Grid>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsExpanded" Value="false">
+                                                <Setter Property="Visibility" TargetName="ItemsHost" Value="Collapsed"/>
+                                            </Trigger>
+                                            <Trigger Property="HasItems" Value="false">
+                                                <Setter Property="Visibility" TargetName="Expander" Value="Hidden"/>
+                                            </Trigger>
+                                            <Trigger Property="IsSelected" Value="true">
+                                                <Setter Property="Background" TargetName="Bd" Value="{StaticResource TreeViewItem.Selected.Background}"/>
+                                                <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource TreeViewItem.Selected.Border}"/>
+                                                <Setter Property="Foreground" Value="{DynamicResource AREghZyBrush.Foreground.Deeper}"/>
+                                            </Trigger>
+                                            <MultiTrigger>
+                                                <MultiTrigger.Conditions>
+                                                    <Condition Property="IsSelected" Value="true"/>
+                                                    <Condition Property="IsSelectionActive" Value="false"/>
+                                                </MultiTrigger.Conditions>
+                                                <Setter Property="Background" TargetName="Bd" Value="{StaticResource TreeViewItem.Selected.Inactive.Background}"/>
+                                                <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource TreeViewItem.Selected.Inactive.Border}"/>
+                                                <Setter Property="Foreground" Value="{DynamicResource AREghZyBrush.Foreground.Disabled}"/>
+                                            </MultiTrigger>
+                                            <Trigger Property="IsEnabled" Value="false">
+                                                <Setter Property="Foreground" Value="{DynamicResource AREghZyBrush.Foreground.Disabled}"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="VirtualizingPanel.IsVirtualizing" Value="true">
+                                    <Setter Property="ItemsPanel">
+                                        <Setter.Value>
+                                            <ItemsPanelTemplate>
+                                                <VirtualizingStackPanel/>
+                                            </ItemsPanelTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                            </Style.Triggers>
                         </Style>
                     </TreeView.ItemContainerStyle>
                     <TreeView.Resources>
@@ -77,19 +155,60 @@
                 </TreeView>
             </Grid>
 
-            <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{DynamicResource ContainerBorder}"/>
+            <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0" 
+                          Background="Transparent" BorderBrush="Transparent"/>
 
             <Grid Grid.Column="2">
                 <Grid.Resources>
                     <converters:NBTCollectionConverter x:Key="CollectionConverter"/>
                 </Grid.Resources>
-                <ListView Background="{DynamicResource BackgroundColour}"
-                          DataContext="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged}"
-                          ItemsSource="{Binding Converter={StaticResource NBTCollectionConverter}, Mode=OneWay}">
+                <ListView DataContext="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged}"
+                          ItemsSource="{Binding Converter={StaticResource NBTCollectionConverter}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                          BorderThickness="0 1 0 0" Background="{DynamicResource AREghZyBrush.Deep.1.Background.Static}"
+                          ap:ListViewAttachedProperty.Command="{Binding ExpandCommand, Mode=OneTime}"
+                          SelectedItem="{Binding Path=SelectedPreview, Source={x:Static local:IoC.MainViewModel}, UpdateSourceTrigger=PropertyChanged}">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Name" Width="250" DisplayMemberBinding="{Binding Name, UpdateSourceTrigger=PropertyChanged}">
-                                
+                            <GridViewColumn Header="Name" Width="250">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" Height="22">
+                                            <Image Height="26" Margin="0 -2 4 0" Source="{Binding Type, Converter={StaticResource NbtIconConverter}, UpdateSourceTrigger=PropertyChanged}"/>
+                                            <TextBlock VerticalAlignment="Center" Margin="2 0 0 0" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="Type" Width="75">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" Height="22">
+                                            <TextBlock VerticalAlignment="Center" Margin="0 0 0 0" Text="{Binding Type, UpdateSourceTrigger=PropertyChanged}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="Value" Width="75">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <ContentControl Content="{Binding}">
+                                            <ContentControl.Resources>
+                                                <DataTemplate DataType="{x:Type nbtvm2:NBTPrimitiveViewModel}">
+                                                    <TextBox Text="{Binding Value, UpdateSourceTrigger=PropertyChanged}"/>
+                                                </DataTemplate>
+                                                <DataTemplate DataType="{x:Type nbtvm2:NBTArrayViewModel}">
+                                                    <TextBlock Text="{Binding Data.Length, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0} elements}" Foreground="{DynamicResource AREghZyBrush.Foreground.Disabled}" VerticalAlignment="Center"/>
+                                                </DataTemplate>
+                                                <DataTemplate DataType="{x:Type nbtvm:NBTTagListViewModel}">
+                                                    <TextBlock Text="{Binding Data.Count, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0} elements}" Foreground="{DynamicResource AREghZyBrush.Foreground.Disabled}" VerticalAlignment="Center"/>
+                                                </DataTemplate>
+                                                <DataTemplate DataType="{x:Type nbtvm:NBTTagCompoundViewModel}">
+                                                    <TextBlock Text="{Binding Map.Count, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0} entries}" Foreground="{DynamicResource AREghZyBrush.Foreground.Disabled}" VerticalAlignment="Center"/>
+                                                </DataTemplate>
+                                            </ContentControl.Resources>
+                                        </ContentControl>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
                             </GridViewColumn>
                         </GridView>
                     </ListView.View>

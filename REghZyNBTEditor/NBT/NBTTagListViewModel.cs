@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using REghZyIOWrapperV2.Streams;
 using REghZyNBTEditor.NBT.Base;
 
@@ -12,30 +13,30 @@ namespace REghZyNBTEditor.NBT {
             set => RaisePropertyChanged(ref this.tagType, value);
         }
 
-        private List<NBTBaseViewModel> data;
-        public List<NBTBaseViewModel> Data {
+        private ObservableCollection<NBTBaseViewModel> data;
+        public ObservableCollection<NBTBaseViewModel> Data {
             get => this.data;
             set => RaisePropertyChanged(ref this.data, value);
         }
 
         public NBTTagListViewModel() {
-            this.data = new List<NBTBaseViewModel>();
+            this.data = new ObservableCollection<NBTBaseViewModel>();
         }
 
         public NBTTagListViewModel(string name) : base(name) {
-            this.data = new List<NBTBaseViewModel>();
+            this.data = new ObservableCollection<NBTBaseViewModel>();
         }
 
-        public NBTTagListViewModel(List<NBTBaseViewModel> data) {
+        public NBTTagListViewModel(ObservableCollection<NBTBaseViewModel> data) {
             this.data = data;
         }
 
-        public NBTTagListViewModel(string name, List<NBTBaseViewModel> data) : base(name) {
+        public NBTTagListViewModel(string name, ObservableCollection<NBTBaseViewModel> data) : base(name) {
             this.data = data;
         }
 
         protected override NBTBaseViewModel CopyInternal() {
-            List<NBTBaseViewModel> list = new List<NBTBaseViewModel>(this.data);
+            ObservableCollection<NBTBaseViewModel> list = new ObservableCollection<NBTBaseViewModel>(this.data);
             foreach (NBTBaseViewModel nbt in this.data) {
                 list.Add(nbt.CopyWithParent());
             }

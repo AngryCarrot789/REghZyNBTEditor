@@ -10,9 +10,9 @@
              d:DesignWidth="200">
     <StackPanel Orientation="Horizontal">
         <Border Width="65" HorizontalAlignment="Left">
-            <TextBlock Text="{Binding Type, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Foreground="{DynamicResource ControlDefaultForeground}"/>
+            <TextBlock x:Name="TYPE_BOX" Text="{Binding Type, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
         </Border>
         <Separator Background="Transparent" Style="{DynamicResource VerticalSeparator}" Margin="4 0"/>
-        <Label Padding="0" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" Content="{Binding Name, UpdateSourceTrigger=PropertyChanged, FallbackValue=NO_NAME}" FontWeight="Bold"/>
+        <Label x:Name="NAME_BOX" Padding="0" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" Content="{Binding Name, UpdateSourceTrigger=PropertyChanged, FallbackValue=NO_NAME}" FontWeight="Bold"/>
     </StackPanel>
 </UserControl>

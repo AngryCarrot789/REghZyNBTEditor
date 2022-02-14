@@ -10,6 +10,6 @@
              d:DesignWidth="200">
     <StackPanel Orientation="Horizontal">
         <local:NBTHeaderControl DataContext="{Binding}"/>
-        <TextBlock Padding="3 0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Map.Count, UpdateSourceTrigger=PropertyChanged, StringFormat={}({0} entries)}"/>
+        <TextBlock Padding="3 0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Map.Count, UpdateSourceTrigger=PropertyChanged, StringFormat={}({0} entries)}" Foreground="{DynamicResource AREghZyBrush.Glyph.Disabled}"/>
     </StackPanel>
 </UserControl>

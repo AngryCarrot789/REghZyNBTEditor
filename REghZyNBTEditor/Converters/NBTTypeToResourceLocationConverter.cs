@@ -25,19 +25,19 @@ namespace REghZyNBTEditor.Converters {
                     case NBTType.End:
                         return LOCATION + "tagEnd.png";
                     case NBTType.Byte:
-                        return LOCATION + "tagB8.png";
+                        return LOCATION + "tagInt8.png";
                     case NBTType.Short:
-                        return LOCATION + "tagS16.png";
+                        return LOCATION + "tagInt16.png";
                     case NBTType.Int:
-                        return LOCATION + "tagI32.png";
+                        return LOCATION + "tagInt32.png";
                     case NBTType.Long:
-                        return LOCATION + "tagL64.png";
+                        return LOCATION + "tagInt64.png";
                     case NBTType.Float:
-                        return LOCATION + "tagFloat.png";
+                        return LOCATION + "tagFloat32.png";
                     case NBTType.Double:
-                        return LOCATION + "tagDouble.png";
+                        return LOCATION + "tagDouble64.png";
                     case NBTType.ByteArray:
-                        return LOCATION + "tagBArray.png";
+                        return LOCATION + "tagArrayInt8.png";
                     case NBTType.String:
                         return LOCATION + "tagString.png";
                     case NBTType.List:
@@ -45,7 +45,7 @@ namespace REghZyNBTEditor.Converters {
                     case NBTType.Compound:
                         return LOCATION + "tagCompound.png";
                     case NBTType.IntArray:
-                        return LOCATION + "tagIArray.png";
+                        return LOCATION + "tagArrayInt32.png";
                     default:
                         if (IS_DEBUG) {
                             return LOCATION + "tagEnd.png";
@@ -53,6 +53,39 @@ namespace REghZyNBTEditor.Converters {
 
                         throw new Exception("Unknown NBT type: " + type);
                 }
+
+                // switch (type) {
+                //     case NBTType.End:
+                //         return LOCATION + "tagEnd.png";
+                //     case NBTType.Byte:
+                //         return LOCATION + "tagB8.png";
+                //     case NBTType.Short:
+                //         return LOCATION + "tagS16.png";
+                //     case NBTType.Int:
+                //         return LOCATION + "tagI32.png";
+                //     case NBTType.Long:
+                //         return LOCATION + "tagL64.png";
+                //     case NBTType.Float:
+                //         return LOCATION + "tagFloat.png";
+                //     case NBTType.Double:
+                //         return LOCATION + "tagDouble.png";
+                //     case NBTType.ByteArray:
+                //         return LOCATION + "tagBArray.png";
+                //     case NBTType.String:
+                //         return LOCATION + "tagString.png";
+                //     case NBTType.List:
+                //         return LOCATION + "tagList.png";
+                //     case NBTType.Compound:
+                //         return LOCATION + "tagCompound.png";
+                //     case NBTType.IntArray:
+                //         return LOCATION + "tagIArray.png";
+                //     default:
+                //         if (IS_DEBUG) {
+                //             return LOCATION + "tagEnd.png";
+                //         }
+                // 
+                //         throw new Exception("Unknown NBT type: " + type);
+                // }
             }
             else {
                 if (IS_DEBUG) {
